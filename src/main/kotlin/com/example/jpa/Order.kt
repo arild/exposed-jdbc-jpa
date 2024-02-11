@@ -20,15 +20,9 @@ data class Order(
     val id: Long = 0,
 
     @Column(nullable = false)
-    val userId: Long,
-
-    @Column(nullable = false)
     val created: Instant,
 
     @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
     val orderLines: List<OrderLine>,
-
-    @Column(nullable = true)
-    val exported: Instant? = null,
 )

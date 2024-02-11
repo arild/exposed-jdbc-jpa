@@ -11,7 +11,6 @@ class OrderRepositoryTest(val orderRepository: OrderRepository) : DatabaseTest({
     "Should store and find order" {
         val order = Order(
             id = 1,
-            userId = 100,
             created = Instant.now(),
             listOf(OrderLine(price = BigDecimal(10.0)), OrderLine(price = BigDecimal(10.0))),
         )
