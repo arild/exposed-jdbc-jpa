@@ -22,7 +22,6 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.kafka:spring-kafka")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.22")
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -31,8 +30,6 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-testcontainers:3.2.2")
     testImplementation("org.testcontainers:postgresql")
-    testImplementation("org.testcontainers:kafka")
-    testImplementation("org.springframework.kafka:spring-kafka-test")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.8.0")
     testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3")
     testImplementation("org.awaitility:awaitility-kotlin:4.2.0")
