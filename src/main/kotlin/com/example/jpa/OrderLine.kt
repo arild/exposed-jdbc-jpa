@@ -1,4 +1,4 @@
-package com.example.e2e.model
+package com.example.jpa
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -9,9 +9,7 @@ import jakarta.persistence.Table
 import java.math.BigDecimal
 
 @Entity
-@Table(
-    name = "order_line",
-)
+@Table(name = "order_line")
 data class OrderLine(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

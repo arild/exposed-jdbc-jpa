@@ -1,4 +1,4 @@
-package com.example.e2e.config
+package com.example.config
 
 import io.kotest.core.config.AbstractProjectConfig
 import io.kotest.core.spec.IsolationMode

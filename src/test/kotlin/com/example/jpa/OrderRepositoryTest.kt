@@ -1,5 +1,6 @@
-package com.example.e2e.model
+package com.example.jpa
 
+import com.example.config.DatabaseTest
 import io.kotest.matchers.shouldBe
 import org.springframework.data.repository.findByIdOrNull
 import java.math.BigDecimal

@@ -1,4 +1,4 @@
-package com.example.e2e.model
+package com.example.jpa
 
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
@@ -13,9 +13,7 @@ import jakarta.persistence.Table
 import java.time.Instant
 
 @Entity
-@Table(
-    name = "orders",
-)
+@Table(name = "orders")
 data class Order(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
