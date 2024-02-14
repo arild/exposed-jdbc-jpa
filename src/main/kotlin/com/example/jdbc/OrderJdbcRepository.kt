@@ -1,6 +1,7 @@
 package com.example.jdbc
 
 import com.example.Order
+import com.example.OrderRepository
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.jdbc.support.GeneratedKeyHolder
@@ -10,10 +11,11 @@ import java.sql.Timestamp
 import java.sql.Types
 
 @Repository
-class OrderRepository(
+class OrderJdbcRepository(
     private val jdbcTemplate: NamedParameterJdbcTemplate,
-) {
-    fun save(order: Order): Order {
+) : OrderRepository {
+
+    override fun save(order: Order): Order {
         val params = MapSqlParameterSource()
             .addValue("created", Timestamp.from(order.created), Types.TIMESTAMP)
         val keyHolder: KeyHolder = GeneratedKeyHolder()
@@ -31,13 +33,13 @@ class OrderRepository(
         )
     }
 
-    fun findByIdOrNull(orderId: Long): Order? {
+    override fun findById(id: Long): Order? {
         return jdbcTemplate.query(
             """
                 SELECT * FROM orders
-                WHERE id = :orderId
+                WHERE id = :id
             """,
-            MapSqlParameterSource().addValue("orderId", orderId),
+            MapSqlParameterSource().addValue("id", id),
         ) { rowMapper, _ ->
             Order(
                 id = rowMapper.getLong("id"),

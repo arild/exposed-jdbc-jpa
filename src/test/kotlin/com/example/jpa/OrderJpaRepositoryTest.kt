@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 import org.springframework.data.repository.findByIdOrNull
 import java.time.Instant
 
-class OrderRepositoryTest(val orderRepository: OrderRepository) : DatabaseTest({
+class OrderJpaRepositoryTest(val orderRepository: OrderJpaRepository) : DatabaseTest({
 
     "Should store order" {
         val order1 = Order(
