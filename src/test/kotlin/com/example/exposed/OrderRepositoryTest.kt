@@ -1,16 +1,13 @@
-package com.example.jdbc
+package com.example.exposed
 
 import com.example.Order
 import com.example.config.DatabaseTest
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import java.time.Instant
 
-class OrderRepositoryTest(
-    private val jdbcTemplate: NamedParameterJdbcTemplate
-) : DatabaseTest({
-    val orderRepository = OrderRepository(jdbcTemplate)
+class OrderRepositoryTest : DatabaseTest({
+    val orderRepository = OrderRepository()
 
     "Should store order" {
         val order = Order(

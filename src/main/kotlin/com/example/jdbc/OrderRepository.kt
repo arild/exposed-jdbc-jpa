@@ -1,33 +1,29 @@
 package com.example.jdbc
 
+import com.example.Order
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.jdbc.support.GeneratedKeyHolder
 import org.springframework.jdbc.support.KeyHolder
-import org.springframework.stereotype.Component
 import org.springframework.stereotype.Repository
 import java.sql.Timestamp
 import java.sql.Types
-import java.time.Instant
 
 @Repository
-@Component
 class OrderRepository(
     private val jdbcTemplate: NamedParameterJdbcTemplate,
 ) {
     fun save(order: Order): Order {
         val params = MapSqlParameterSource()
-            .addValue("orderId", order.id)
-            .addValue("created", Timestamp.from(Instant.now()), Types.TIMESTAMP)
+            .addValue("created", Timestamp.from(order.created), Types.TIMESTAMP)
         val keyHolder: KeyHolder = GeneratedKeyHolder()
+
         jdbcTemplate.update(
-            """
-                INSERT INTO orders(id, created)
-                VALUES (:orderId, :created)
-            """,
+            "INSERT INTO orders(created) VALUES (:created)",
             params,
             keyHolder,
         )
+
         return Order(
             id = keyHolder.keys?.get("id") as Long,
             created = order.created,

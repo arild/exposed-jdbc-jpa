@@ -55,4 +55,5 @@ fun truncateTables() {
 
     val allTables = "orders, order_line"
     connection.prepareStatement("TRUNCATE TABLE $allTables RESTART IDENTITY CASCADE").execute()
+    connection.prepareStatement("ALTER SEQUENCE orders_seq RESTART").execute()
 }
