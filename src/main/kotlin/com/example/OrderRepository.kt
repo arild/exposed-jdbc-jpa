@@ -1,7 +1,5 @@
 package com.example
 
-import com.example.jpa.OrderLine
-import java.math.BigDecimal
 import java.time.Instant
 
 interface OrderRepository {
@@ -17,6 +15,5 @@ data class Order(
 )
 
 data class OrderLine(
-    val id: Long,
-    val price: BigDecimal,
+    val price: Double,
 )

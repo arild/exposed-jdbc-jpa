@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
-import java.math.BigDecimal
 
 @Entity
 @Table(name = "order_line")
@@ -16,5 +15,5 @@ data class OrderLine(
     val id: Long = 0,
 
     @Column(nullable = false)
-    val price: BigDecimal,
+    val price: Double,
 )
