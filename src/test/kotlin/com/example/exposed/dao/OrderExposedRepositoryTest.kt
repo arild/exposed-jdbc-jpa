@@ -1,4 +1,4 @@
-package com.example.exposed
+package com.example.exposed.dao
 
 import com.example.Order
 import com.example.OrderLine
@@ -8,7 +8,7 @@ import io.kotest.matchers.shouldBe
 import java.time.Instant
 
 class OrderExposedRepositoryTest : DatabaseTest({
-    val orderRepository = OrderExposedRepository(OrderLineRepository())
+    val orderRepository = OrderExposedRepository()
 
     "Should store order" {
         val order = Order(

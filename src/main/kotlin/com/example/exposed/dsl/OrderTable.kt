@@ -1,4 +1,4 @@
-package com.example.exposed
+package com.example.exposed.dsl
 
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.timestamp

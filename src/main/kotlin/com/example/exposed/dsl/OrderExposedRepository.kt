@@ -1,4 +1,4 @@
-package com.example.exposed
+package com.example.exposed.dsl
 
 import com.example.Order
 import com.example.OrderLine
