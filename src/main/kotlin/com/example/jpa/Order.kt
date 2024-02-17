@@ -21,7 +21,7 @@ data class Order(
     @Column(nullable = false)
     val created: Instant,
 
-    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     val orderLines: List<OrderLine>,
 )

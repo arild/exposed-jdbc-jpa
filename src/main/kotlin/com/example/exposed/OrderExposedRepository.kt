@@ -52,14 +52,13 @@ class OrderExposedRepository(val orderLineRepository: OrderLineRepository) : Ord
     )
 
     private fun Iterable<ResultRow>.toOrderWithOrderLines(): List<Order> =
-        fold(mutableMapOf<Long, Order>()) { acc, resultRow ->
+        fold(mapOf<Long, Order>()) { acc, resultRow ->
             val order = resultRow.toOrder()
-            val orderLine = resultRow.getOrNull(OrderLineTable.orderId)
-                ?.let { resultRow.toOrderLine() }
+            val orderLine = resultRow.toOrderLine()
 
-            val currentOrder = acc.getOrDefault(order.id, order)
-            acc[order.id] = currentOrder.copy(orderLines = currentOrder.orderLines + listOfNotNull(orderLine))
-            acc
+            acc + acc.getOrDefault(order.id, order).let {
+                it.id to it.copy(orderLines = it.orderLines + orderLine)
+            }
         }.values.toList()
 }
 

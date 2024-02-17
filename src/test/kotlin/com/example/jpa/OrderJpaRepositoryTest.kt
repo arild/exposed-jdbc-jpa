@@ -11,21 +11,21 @@ class OrderJpaRepositoryTest(val orderRepository: OrderJpaRepository) : Database
     "Should store order" {
         val order1 = Order(
             created = Instant.now(),
-            orderLines = emptyList(),
+            orderLines = listOf(OrderLine(price = 10.0), OrderLine(price = 20.0)),
         )
         val order2 = Order(
             created = Instant.now(),
-            orderLines = emptyList(),
+            orderLines = listOf(OrderLine(price = 10.0), OrderLine(price = 20.0)),
         )
 
         orderRepository.save(order1) shouldBe order1.copy(id = 1L)
         orderRepository.save(order2) shouldBe order2.copy(id = 2L)
     }
 
-    "Should find order" {
+    "Should find order order lines lazily" {
         val order = Order(
             created = Instant.now(),
-            orderLines = emptyList(),
+            orderLines = listOf(OrderLine(price = 10.0), OrderLine(price = 20.0)),
         )
         val saved = orderRepository.save(order)
 
