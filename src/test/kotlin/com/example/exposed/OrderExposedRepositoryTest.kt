@@ -18,8 +18,8 @@ class OrderExposedRepositoryTest : DatabaseTest({
             ),
         )
 
-        orderRepository.save(order) shouldBe order.copy(id = 1L)
-        orderRepository.save(order) shouldBe order.copy(id = 2L)
+        orderRepository.save(order) shouldBe order.copy(id = 1)
+        orderRepository.save(order) shouldBe order.copy(id = 2)
     }
 
     "Should find order without order lines" {
@@ -29,8 +29,8 @@ class OrderExposedRepositoryTest : DatabaseTest({
         )
         orderRepository.save(order)
 
-        orderRepository.findById(1L) shouldBe order.copy(id = 1L, orderLines = emptyList())
-        orderRepository.findById(2L).shouldBeNull()
+        orderRepository.findById(1) shouldBe order.copy(id = 1, orderLines = emptyList())
+        orderRepository.findById(2).shouldBeNull()
     }
 
     "Should find order with order lines" {
@@ -41,8 +41,8 @@ class OrderExposedRepositoryTest : DatabaseTest({
         orderRepository.save(order)
         orderRepository.save(order)
 
-        orderRepository.findByIdWithOrderLines(1L) shouldBe order.copy(id = 1L)
-        orderRepository.findByIdWithOrderLines(2L) shouldBe order.copy(id = 2L)
-        orderRepository.findByIdWithOrderLines(3L).shouldBeNull()
+        orderRepository.findByIdWithOrderLines(1) shouldBe order.copy(id = 1)
+        orderRepository.findByIdWithOrderLines(2) shouldBe order.copy(id = 2)
+        orderRepository.findByIdWithOrderLines(3).shouldBeNull()
     }
 })

@@ -18,8 +18,8 @@ class OrderJdbcRepositoryTest(
             orderLines = emptyList(),
         )
 
-        orderRepository.save(order) shouldBe order.copy(id = 1L)
-        orderRepository.save(order) shouldBe order.copy(id = 2L)
+        orderRepository.save(order) shouldBe order.copy(id = 1)
+        orderRepository.save(order) shouldBe order.copy(id = 2)
     }
 
     "Should find order" {
@@ -29,7 +29,7 @@ class OrderJdbcRepositoryTest(
         )
         orderRepository.save(order)
 
-        orderRepository.findById(1L) shouldBe order.copy(id = 1L)
-        orderRepository.findById(2L).shouldBeNull()
+        orderRepository.findById(1) shouldBe order.copy(id = 1)
+        orderRepository.findById(2).shouldBeNull()
     }
 })

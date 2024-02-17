@@ -4,14 +4,14 @@
 
 CREATE TABLE order_line
 (
-    id          BIGSERIAL PRIMARY KEY,
+    id          SERIAL PRIMARY KEY,
     price       NUMERIC(19, 2) NOT NULL,
     order_id    BIGINT
 );
 
 CREATE TABLE orders
 (
-    id       BIGSERIAL PRIMARY KEY,
+    id       SERIAL PRIMARY KEY,
     created  TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );
 

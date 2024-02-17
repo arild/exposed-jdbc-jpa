@@ -5,11 +5,11 @@ import java.time.Instant
 interface OrderRepository {
     fun save(order: Order): Order
 
-    fun findById(id: Long): Order?
+    fun findById(id: Int): Order?
 }
 
 data class Order(
-    val id: Long = 0,
+    val id: Int = 0,
     val created: Instant,
     val orderLines: List<OrderLine>,
 )

@@ -27,13 +27,13 @@ class OrderJdbcRepository(
         )
 
         return Order(
-            id = keyHolder.keys?.get("id") as Long,
+            id = keyHolder.keys?.get("id") as Int,
             created = order.created,
             orderLines = emptyList(),
         )
     }
 
-    override fun findById(id: Long): Order? {
+    override fun findById(id: Int): Order? {
         return jdbcTemplate.query(
             """
                 SELECT * FROM orders
@@ -42,7 +42,7 @@ class OrderJdbcRepository(
             MapSqlParameterSource().addValue("id", id),
         ) { rowMapper, _ ->
             Order(
-                id = rowMapper.getLong("id"),
+                id = rowMapper.getInt("id"),
                 created = rowMapper.getTimestamp("created").toInstant(),
                 orderLines = emptyList(),
             )

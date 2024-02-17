@@ -27,7 +27,7 @@ class OrderExposedRepository(val orderLineRepository: OrderLineRepository) : Ord
     }
 
     @Transactional(readOnly = true)
-    override fun findById(id: Long): Order? {
+    override fun findById(id: Int): Order? {
         return OrderTable
             .selectAll()
             .where { OrderTable.id eq id }
@@ -36,7 +36,7 @@ class OrderExposedRepository(val orderLineRepository: OrderLineRepository) : Ord
     }
 
     @Transactional(readOnly = true)
-    fun findByIdWithOrderLines(orderId: Long): Order? {
+    fun findByIdWithOrderLines(orderId: Int): Order? {
         return OrderTable
             .innerJoin(OrderLineTable)
             .selectAll()
@@ -52,7 +52,7 @@ class OrderExposedRepository(val orderLineRepository: OrderLineRepository) : Ord
     )
 
     private fun Iterable<ResultRow>.toOrderWithOrderLines(): List<Order> =
-        fold(mapOf<Long, Order>()) { acc, resultRow ->
+        fold(mapOf<Int, Order>()) { acc, resultRow ->
             val order = resultRow.toOrder()
             val orderLine = resultRow.toOrderLine()
 
@@ -66,7 +66,7 @@ class OrderExposedRepository(val orderLineRepository: OrderLineRepository) : Ord
 class OrderLineRepository {
 
     @Transactional
-    fun saveOrderLines(orderId: Long, orderLines: List<OrderLine>): List<OrderLine> {
+    fun saveOrderLines(orderId: Int, orderLines: List<OrderLine>): List<OrderLine> {
         return OrderLineTable.batchInsert(orderLines) { orderLine ->
             this[OrderLineTable.orderId] = orderId
             this[OrderLineTable.price] = orderLine.price
