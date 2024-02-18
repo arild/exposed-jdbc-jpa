@@ -22,27 +22,14 @@ class OrderExposedDaoRepository : OrderRepository {
                 this.order = savedOrder
             }
         }
-        return order.copy(
-            id = savedOrder.id.value,
-            orderLines = savedOrderLines.map { orderLine ->
-                OrderLine(
-                    price = orderLine.price
-                )
-            }
-        )
+        return savedOrder.toOrder(savedOrderLines)
     }
 
     @Transactional(readOnly = true)
     override fun findById(id: Int): Order? {
         return OrderEntity
             .findById(id)
-            ?.let {
-                Order(
-                    id = it.id.value,
-                    created = it.created,
-                    orderLines = emptyList(),
-                )
-            }
+            ?.toOrder(orderLines = emptyList())
     }
 
     @Transactional(readOnly = true)
@@ -54,17 +41,17 @@ class OrderExposedDaoRepository : OrderRepository {
 
         return OrderEntity
             .wrapRows(query)
-            .map {
-                Order(
-                    id = it.id.value,
-                    created = it.created,
-                    orderLines = it.orderLines.map { orderLine ->
-                        OrderLine(
-                            price = orderLine.price
-                        )
-                    }
-                )
-            }
+            .map { it.toOrder(it.orderLines.toList()) }
             .firstOrNull()
     }
+
+    private fun OrderEntity.toOrder(orderLines: List<OrderLineEntity>): Order =
+        Order(
+            id = id.value,
+            created = created,
+            orderLines = orderLines.map { it.toOrderLine() },
+        )
+
+    private fun OrderLineEntity.toOrderLine(): OrderLine =
+        OrderLine(price = price)
 }
