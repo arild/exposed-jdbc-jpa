@@ -19,21 +19,21 @@ class OrderJdbcRepository(
 
     override fun save(order: Order): Order {
         val keyHolder: KeyHolder = GeneratedKeyHolder()
-
         jdbcTemplate.update(
             "INSERT INTO orders(created) VALUES (:created)",
             MapSqlParameterSource()
                 .addValue("created", Timestamp.from(order.created), Types.TIMESTAMP),
             keyHolder,
-        ).let { updated -> require(updated == 1) }
+        )
         val orderId = keyHolder.keys?.get("id") as Int
+
         order.orderLines.forEach {
             jdbcTemplate.update(
                 "INSERT INTO order_line(order_id, price) VALUES (:order_id, :price)",
                 MapSqlParameterSource()
                     .addValue("order_id", orderId, Types.INTEGER)
                     .addValue("price", it.price, Types.DOUBLE),
-            ).let { updated -> require(updated == 1) }
+            )
         }
 
         return Order(
