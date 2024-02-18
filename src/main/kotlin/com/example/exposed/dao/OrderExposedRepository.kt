@@ -46,11 +46,11 @@ class OrderExposedRepository : OrderRepository {
     }
 
     @Transactional(readOnly = true)
-    fun findByIdWithOrderLines(id: Int): Order? {
+    override fun findByIdWithOrderLines(orderId: Int): Order? {
         val query = Orders
             .innerJoin(OrderLines)
             .selectAll()
-            .where(Orders.id eq id)
+            .where(Orders.id eq orderId)
 
         return OrderEntity
             .wrapRows(query)

@@ -32,4 +32,15 @@ class OrderJpaRepositoryTest(val orderRepository: OrderJpaRepository) : Database
         orderRepository.findByIdOrNull(saved.id) shouldBe order.copy(id = saved.id)
         orderRepository.findByIdOrNull(saved.id + 1).shouldBeNull()
     }
+
+    "Should find order order lines eagerly" {
+        val order = Order(
+            created = Instant.now(),
+            orderLines = listOf(OrderLine(price = 10.0), OrderLine(price = 20.0)),
+        )
+        val saved = orderRepository.save(order)
+
+        orderRepository.findByIdOrNull(saved.id) shouldBe order.copy(id = saved.id)
+        orderRepository.findByIdOrNull(saved.id + 1).shouldBeNull()
+    }
 })

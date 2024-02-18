@@ -36,7 +36,7 @@ class OrderExposedRepository(val orderLineRepository: OrderLineRepository) : Ord
     }
 
     @Transactional(readOnly = true)
-    fun findByIdWithOrderLines(orderId: Int): Order? {
+    override fun findByIdWithOrderLines(orderId: Int): Order? {
         return OrderTable
             .innerJoin(OrderLineTable)
             .selectAll()

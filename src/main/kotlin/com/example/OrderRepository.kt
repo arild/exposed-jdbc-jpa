@@ -6,6 +6,8 @@ interface OrderRepository {
     fun save(order: Order): Order
 
     fun findById(id: Int): Order?
+
+    fun findByIdWithOrderLines(orderId: Int): Order?
 }
 
 data class Order(
