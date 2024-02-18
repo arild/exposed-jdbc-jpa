@@ -3,12 +3,15 @@ package com.example.exposed.dao
 import com.example.Order
 import com.example.OrderLine
 import com.example.config.DatabaseTest
+import com.example.config.ExposedConfiguration
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import org.springframework.context.annotation.Import
 import java.time.Instant
 
-class OrderExposedRepositoryTest : DatabaseTest({
-    val orderRepository = OrderExposedRepository()
+@Import(ExposedConfiguration::class)
+class OrderExposedRepositoryDaoTest : DatabaseTest({
+    val orderRepository = OrderExposedDaoRepository()
 
     "Should store order" {
         val order = Order(

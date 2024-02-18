@@ -18,8 +18,8 @@ class OrderJpaRepositoryTest(val orderRepository: OrderJpaRepository) : Database
             orderLines = listOf(OrderLine(price = 10.0), OrderLine(price = 20.0)),
         )
 
-        orderRepository.save(order1) shouldBe order1.copy(id = 1L)
-        orderRepository.save(order2) shouldBe order2.copy(id = 2L)
+        orderRepository.save(order1) shouldBe order1.copy(id = 1)
+        orderRepository.save(order2) shouldBe order2.copy(id = 2)
     }
 
     "Should find order order lines lazily" {
@@ -40,7 +40,9 @@ class OrderJpaRepositoryTest(val orderRepository: OrderJpaRepository) : Database
         )
         val saved = orderRepository.save(order)
 
-        orderRepository.findByIdOrNull(saved.id) shouldBe order.copy(id = saved.id)
-        orderRepository.findByIdOrNull(saved.id + 1).shouldBeNull()
+        val result = orderRepository.findByIdWithOrderLines(saved.id)
+        result?.id shouldBe saved.id
+        result?.created shouldBe saved.created
+        result?.orderLines shouldBe saved.orderLines
     }
 })

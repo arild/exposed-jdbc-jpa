@@ -3,11 +3,14 @@ package com.example.exposed.dsl
 import com.example.Order
 import com.example.OrderLine
 import com.example.config.DatabaseTest
+import com.example.config.ExposedConfiguration
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import org.springframework.context.annotation.Import
 import java.time.Instant
 
-class OrderExposedRepositoryTest : DatabaseTest({
+@Import(ExposedConfiguration::class)
+class OrderExposedDslRepositoryTest : DatabaseTest({
     val orderRepository = OrderExposedRepository(OrderLineRepository())
 
     "Should store order" {

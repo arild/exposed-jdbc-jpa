@@ -16,7 +16,7 @@ import java.time.Instant
 data class Order(
     @Id
     @GeneratedValue
-    val id: Long = 0,
+    val id: Int = 0,
 
     @Column(nullable = false)
     val created: Instant,

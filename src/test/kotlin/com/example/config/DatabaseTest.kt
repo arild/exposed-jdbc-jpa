@@ -8,13 +8,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Import
 import org.springframework.test.context.ContextConfiguration
 import javax.sql.DataSource
 
 @DataJpaTest
 @ContextConfiguration(initializers = [PostgresContainer::class])
-@Import(ExposedConfiguration::class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class DatabaseTest(body: StringSpec.() -> Unit = {}) : StringSpec(body) {
 
@@ -22,9 +20,7 @@ class DatabaseTest(body: StringSpec.() -> Unit = {}) : StringSpec(body) {
 }
 
 @Configuration
-class ExposedConfiguration(
-    dataSource: DataSource,
-) {
+class ExposedConfiguration(dataSource: DataSource) {
     init {
         Database.connect(dataSource)
     }
