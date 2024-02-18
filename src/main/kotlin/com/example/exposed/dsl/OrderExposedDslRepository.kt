@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 
 @Repository
-class OrderExposedRepository(val orderLineRepository: OrderLineRepository) : OrderRepository {
+class OrderExposedRepository : OrderRepository {
 
     @Transactional
     override fun save(order: Order): Order {
@@ -22,7 +22,10 @@ class OrderExposedRepository(val orderLineRepository: OrderLineRepository) : Ord
             .toOrder()
 
         return savedOrder.copy(
-            orderLines = orderLineRepository.saveOrderLines(savedOrder.id, order.orderLines)
+            orderLines = OrderLineTable.batchInsert(order.orderLines) { orderLine ->
+                this[OrderLineTable.orderId] = savedOrder.id
+                this[OrderLineTable.price] = orderLine.price
+            }.map { it.toOrderLine() }
         )
     }
 
@@ -51,6 +54,10 @@ class OrderExposedRepository(val orderLineRepository: OrderLineRepository) : Ord
         orderLines = emptyList(),
     )
 
+    private fun ResultRow.toOrderLine() = OrderLine(
+        price = this[OrderLineTable.price],
+    )
+
     private fun Iterable<ResultRow>.toOrderWithOrderLines(): List<Order> =
         fold(mapOf<Int, Order>()) { acc, resultRow ->
             val order = resultRow.toOrder()
@@ -61,19 +68,3 @@ class OrderExposedRepository(val orderLineRepository: OrderLineRepository) : Ord
             }
         }.values.toList()
 }
-
-@Repository
-class OrderLineRepository {
-
-    @Transactional
-    fun saveOrderLines(orderId: Int, orderLines: List<OrderLine>): List<OrderLine> {
-        return OrderLineTable.batchInsert(orderLines) { orderLine ->
-            this[OrderLineTable.orderId] = orderId
-            this[OrderLineTable.price] = orderLine.price
-        }.map { it.toOrderLine() }
-    }
-}
-
-private fun ResultRow.toOrderLine() = OrderLine(
-    price = this[OrderLineTable.price],
-)

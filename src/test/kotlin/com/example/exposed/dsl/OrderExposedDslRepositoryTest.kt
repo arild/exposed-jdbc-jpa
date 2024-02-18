@@ -11,7 +11,7 @@ import java.time.Instant
 
 @Import(ExposedConfiguration::class)
 class OrderExposedDslRepositoryTest : DatabaseTest({
-    val orderRepository = OrderExposedRepository(OrderLineRepository())
+    val orderRepository = OrderExposedRepository()
 
     "Should store order" {
         val order = Order(
