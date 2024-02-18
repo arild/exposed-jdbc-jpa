@@ -12,7 +12,7 @@ import jakarta.persistence.Table
 data class OrderLine(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
+    val id: Int = 0,
 
     @Column(nullable = false)
     val price: Double,
